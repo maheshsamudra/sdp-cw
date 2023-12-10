@@ -6,10 +6,15 @@
 
 ## Setting up the project:
 
--   composer install
+-   `composer install`
+-   `npm install`
 -   run `cp .env.example .env`
 -   Create a DB and update the .env file
 -   `php artisan key:generate`
 -   `php artisan migrate`
 -   `php artisan db:seed`
+
+
+## Starting the development server:
 -   `php artisan serve`
+-   `npm run dev`

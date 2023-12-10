@@ -29,7 +29,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => "Staff Member",
+            'name' => "General Public",
             'email' => 'user@techtitans.com',
             'password' => Hash::make('Welcome@1234'),
             'nic' => '199010301234',
