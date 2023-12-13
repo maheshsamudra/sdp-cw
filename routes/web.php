@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,6 +24,12 @@ Route::get('/', function () {
 Route::get('/complaints/view/{id}', [ComplaintsController::class, 'view']);
 
 Route::get('/dashboard', [DashboardController::class, 'view'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/users', [UserController::class, 'view'])->middleware(['auth', 'verified'])->name('users');
+
+Route::match(['get', 'post'], '/users/staff/add', [UserController::class, 'add_staff'])->middleware(['auth', 'verified'])->name('add_staff');
+Route::match(['get', 'post'], '/users/manager/add', [UserController::class, 'add_manager'])->middleware(['auth', 'verified'])->name('add_manager');
+
 
 // Complaints Page Route
 Route::get('/complaint', function () {

@@ -22,7 +22,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => "Staff Member",
+            'name' => "Forest Staff Member",
             'email' => 'forest@techtitans.com',
             'department_id' => 1,
             'password' => Hash::make('Welcome@1234'),
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
         ]);
 
         DB::table('users')->insert([
-            'name' => "Staff Member",
+            'name' => "Wildlife Staff Member",
             'department_id' => 1,
             'email' => 'wildlife@techtitans.com',
             'password' => Hash::make('Welcome@1234'),
