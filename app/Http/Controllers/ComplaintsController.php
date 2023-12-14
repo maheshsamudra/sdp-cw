@@ -51,4 +51,15 @@ class ComplaintsController extends Controller
 
         return back();
     }
+
+    public function complete($id, Request $request)
+    {
+
+        $complaint = Complaints::find($id);
+        $complaint->completed_at = now();
+
+        $complaint->save();
+
+        return back();
+    }
 }

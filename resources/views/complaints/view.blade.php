@@ -5,6 +5,16 @@
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
                 {{ $complaint->title }}
             </h2>
+
+            @if ($complaint->completed_at)
+            <x-primary-button disabled class="ms-auto opacity-50">
+                {{ __('Resolved') }}
+            </x-primary-button>
+            @else
+            <x-primary-link href="/complaints/{{ $complaint->id }}/complete" class="ms-auto">
+                {{ __('Mark as resolved') }}
+            </x-primary-link>
+            @endif
         </div>
     </x-slot>
 
