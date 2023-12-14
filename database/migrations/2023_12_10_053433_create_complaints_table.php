@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->integer('department_id')->nullable()->constrained();
             $table->integer('user_id')->nullable()->constrained();
+            $table->integer('assigned_staff_user_id')->nullable()->constrained();
             $table->string('title');
             $table->date('observed_date');
             $table->text('details');
+            $table->boolean('completed')->default(false);
             $table->timestamps();
         });
     }
