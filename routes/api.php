@@ -7,7 +7,8 @@ use App\Models\User;
 use App\Models\Complaint;
 
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Password;
+
 
 
 /*
@@ -33,17 +34,26 @@ Route::post('/login', function (Request $request) {
         'device_name' => 'required',
     ]);
 
+    $data = new \stdClass();
+
     $user = User::where('email', $request->email)->first();
+
+    if ($user->role != "user") {
+        $data->error = "The account type is not supported. Please use web app to login.";
+        return $data;
+    }
 
     if (
         !$user || !Hash::check($request->password, $user->password)
     ) {
-        throw ValidationException::withMessages([
-            'email' => ['The provided credentials are incorrect.'],
-        ]);
+        $data->error = "The provided credentials are incorrect.";
+        return $data;
     }
 
-    return $user->createToken($request->device_name)->plainTextToken;
+    $data->user = $user;
+    $data->token = $user->createToken($request->device_name)->plainTextToken;
+
+    return $data;
 });
 
 Route::post('/register', function (Request $request) {
@@ -65,9 +75,15 @@ Route::post('/register', function (Request $request) {
         'password' => Hash::make($request->password),
     ]);
 
+    $data = new \stdClass();
+
+
     $user = User::where('email', $request->email)->first();
 
-    return $user->createToken($request->device_name)->plainTextToken;
+    $data->user = $user;
+    $data->token = $user->createToken($request->device_name)->plainTextToken;
+
+    return $data;
 });
 
 Route::middleware('auth:sanctum')->get('/complaints', function (Request $request) {
@@ -92,6 +108,16 @@ Route::middleware('auth:sanctum')->post('/complaints', function (Request $reques
     ]);
 
     // todo: upload the images and save to the DB
+
+    return true;
+});
+
+Route::middleware('auth:sanctum')->post('/reset-forgotten-password', function (Request $request) {
+
+    // add complaints
+    $status = Password::sendResetLink(
+        $request->only('email')
+    );
 
     return true;
 });
