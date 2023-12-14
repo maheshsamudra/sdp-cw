@@ -8,4 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class ComplaintLog extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'complaint_id',
+        'comment',
+        'user_id'
+    ];
 }

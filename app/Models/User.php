@@ -21,6 +21,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'nic',
+        'dob',
+        'role',
+        'department_id'
     ];
 
     /**
@@ -43,7 +47,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    function add() {
+    function add()
+    {
         // code to add user
     }
 }

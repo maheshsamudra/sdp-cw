@@ -44,7 +44,7 @@ class UserController extends Controller
             ]);
 
             // add the new user
-            User::insert([
+            User::create([
                 'name' => $request->input("name"),
                 'email' => $request->input("email"),
                 'role' => 'manager',
@@ -65,7 +65,7 @@ class UserController extends Controller
             ]);
 
             // add the new user
-            User::insert([
+            User::create([
                 'name' => $request->input("name"),
                 'email' => $request->input("email"),
                 'department_id' => $request->input("departmentId"),

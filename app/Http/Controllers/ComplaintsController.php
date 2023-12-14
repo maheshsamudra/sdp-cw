@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ComplaintLog;
 use App\Models\Complaints;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ComplaintsController extends Controller
 {
@@ -16,10 +18,13 @@ class ComplaintsController extends Controller
         $staff = User::select("users.*", 'departments.name as department_name')->where('role', '=', 'staff')->join('departments', 'users.department_id', '=', 'departments.id')
             ->get();
 
+        $logs = ComplaintLog::where('complaint_id', $id)->get();
+
 
         return view('complaints.view', [
             'complaint' => $complaint,
-            'staff' => $staff
+            'staff' => $staff,
+            'logs' => $logs
         ]);
     }
 
@@ -32,5 +37,18 @@ class ComplaintsController extends Controller
         $complaint->save();
 
         return redirect("/dashboard");
+    }
+
+    public function log($id, Request $request)
+    {
+
+        $complaint = ComplaintLog::create([
+            'complaint_id' => $id,
+            'comment' => $request->comment,
+            'user_id' => Auth::user()->id,
+        ]);
+
+
+        return back();
     }
 }

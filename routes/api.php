@@ -67,7 +67,7 @@ Route::post('/register', function (Request $request) {
         'device_name' => 'required'
     ]);
 
-    User::insert([
+    User::create([
         'name' => $request->name,
         'email' => $request->email,
         'nic' => $request->nic,
@@ -99,7 +99,7 @@ Route::middleware('auth:sanctum')->get('/complaints/{id}', function ($id, Reques
 Route::middleware('auth:sanctum')->post('/complaints', function (Request $request) {
 
     // add complaints
-    $complaint = Complaint::insert([
+    $complaint = Complaint::create([
         'department_id' => $request->department_id,
         'user_id' => $request->user()->id,
         'title' => $request->title,

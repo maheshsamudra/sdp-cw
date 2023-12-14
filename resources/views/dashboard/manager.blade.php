@@ -7,7 +7,7 @@
 
     <h2 class="text-xl mb-3 mt-6">Unassigned Complaints</h2>
 
-    @if (Route::has('login'))
+    @if (count($complaints) > 0)
     <div class="relative overflow-x-auto">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -24,7 +24,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($unassigned_complaints as $complaint)
+                @foreach ($complaints as $complaint)
                 <tr class="bg-white border-b ">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         {{$complaint->title}}

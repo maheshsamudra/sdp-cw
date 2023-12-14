@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('title');
             $table->date('observed_date');
             $table->text('details');
-            $table->boolean('completed')->default(false);
+            $table->date('completed_at')->nullable()->default(null);
             $table->timestamps();
         });
     }
