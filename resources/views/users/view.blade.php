@@ -42,7 +42,7 @@
                         {{$user->email}}
                     </td>
                     <td class="px-6 py-4">
-                        Edit
+                        <a href="/users/{{$user->id}}">Edit</a>
                     </td>
                 </tr> @endforeach
 
@@ -79,7 +79,7 @@
                         {{$user->email}}
                     </td>
                     <td class="px-6 py-4">
-                        Edit
+                        <a href="/users/{{$user->id}}">Edit</a>
                     </td>
                 </tr> @endforeach
 

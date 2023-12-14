@@ -24,6 +24,16 @@ class UserController extends Controller
         ]);
     }
 
+    public function view_user($id)
+    {
+
+        $user = User::find($id);
+
+        return view("users.view-user", [
+            'user' => $user,
+        ]);
+    }
+
     public function add_manager(Request $request)
     {
 
@@ -37,6 +47,7 @@ class UserController extends Controller
             User::insert([
                 'name' => $request->input("name"),
                 'email' => $request->input("email"),
+                'role' => 'manager',
                 'password' => Hash::make($request->input("Welcome@1234")),
             ]);
         }
@@ -58,6 +69,7 @@ class UserController extends Controller
                 'name' => $request->input("name"),
                 'email' => $request->input("email"),
                 'department_id' => $request->input("departmentId"),
+                'role' => 'staff',
                 'password' => Hash::make($request->input("Welcome@1234")),
             ]);
         }

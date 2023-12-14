@@ -31,7 +31,7 @@ class UserSeeder extends Seeder
 
         DB::table('users')->insert([
             'name' => "Wildlife Staff Member",
-            'department_id' => 1,
+            'department_id' => 2,
             'email' => 'wildlife@techtitans.com',
             'password' => Hash::make('Welcome@1234'),
             'role' => 'staff'
