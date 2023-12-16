@@ -52,10 +52,10 @@
           <a class="btn btn-green ml-2" href="#download-app" role="button">Download App</a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-green ml-2" href="#login" role="button">Login</a>
+          <a class="btn btn-green ml-2" href="{{ route('login') }}" role="button">Login</a>
         </li>
         <li class="nav-item">
-          <a class="btn btn-green ml-2" href="#register" role="button">Register</a>
+          <a class="btn btn-green ml-2" href="{{ route('register') }}" role="button">Register</a>
         </li>
       </ul>
     </div>
