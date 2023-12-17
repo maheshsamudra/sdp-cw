@@ -45,7 +45,8 @@ Route::get('/complaints/{id}/complete', [ComplaintsController::class, 'complete'
 Route::get('/image/{category}/{folder}/{filename}.jpg', [ImageController::class, 'view'])->middleware(['auth', 'verified'])->name('view_image');
 Route::get('/activity-log', function () {
 
-    $logs = ActivityLog::select('activity_logs.*', 'users.id', 'users.name', 'users.email')->join('users', 'users.id', 'activity_logs.user_id')->get();
+    $logs = ActivityLog::select('activity_logs.*', 'users.id', 'users.name', 'users.email')
+        ->join('users', 'users.id', 'activity_logs.user_id')->orderBy('created_at', 'desc')->get();
 
 
     return view("activity-log", ['logs' => $logs]);

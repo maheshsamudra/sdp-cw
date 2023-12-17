@@ -8,7 +8,7 @@
 
             @if ($complaint->completed_at)
             <x-primary-button disabled class="ms-auto opacity-50">
-                {{ __('Resolved') }}
+                {{ __('Resolved') }} on {{$complaint->completed_at}}
             </x-primary-button>
             @else
             <x-primary-link href="/complaints/{{ $complaint->id }}/complete" class="ms-auto">
@@ -62,6 +62,9 @@
 
         <!-- Display the logs here -->
 
+
+        @endif
+
         <h2 class="mt-6 mb-3">Progress Log</h2>
         @if (count($logs) > 0)
         <ul>
@@ -74,7 +77,8 @@
         @else
         <p>No logs so far</p>
         @endif
-        @endif
+
+
     </div>
 
 
