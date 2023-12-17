@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\User;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,8 @@ class UserController extends Controller
                 'role' => 'manager',
                 'password' => Hash::make($request->input("Welcome@1234")),
             ]);
+
+            ActivityLog::add_log("Manager added - $request->name | $request->email");
         }
 
         return view("users.add.manager");
@@ -72,6 +75,8 @@ class UserController extends Controller
                 'role' => 'staff',
                 'password' => Hash::make($request->input("Welcome@1234")),
             ]);
+
+            ActivityLog::add_log("Staff Member added - $request->name | $request->email | $request->departmentId");
         }
         $departments = Department::get();
         return view("users.add.staff", ['departments' => $departments]);

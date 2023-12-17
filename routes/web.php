@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ComplaintsController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ImageController;
+use App\Models\ActivityLog;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,6 +39,17 @@ Route::get('/complaints/{id}', [ComplaintsController::class, 'view'])->middlewar
 Route::post('/complaints/{id}/assign', [ComplaintsController::class, 'assign'])->middleware(['auth', 'verified']);
 Route::post('/complaints/{id}/log', [ComplaintsController::class, 'log'])->middleware(['auth', 'verified']);
 Route::get('/complaints/{id}/complete', [ComplaintsController::class, 'complete'])->middleware(['auth', 'verified']);
+
+
+
+Route::get('/image/{category}/{folder}/{filename}.jpg', [ImageController::class, 'view'])->middleware(['auth', 'verified'])->name('view_image');
+Route::get('/activity-log', function () {
+
+    $logs = ActivityLog::select('activity_logs.*', 'users.id', 'users.name', 'users.email')->join('users', 'users.id', 'activity_logs.user_id')->get();
+
+
+    return view("activity-log", ['logs' => $logs]);
+})->middleware(['auth', 'verified'])->name('view_activity_logs');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

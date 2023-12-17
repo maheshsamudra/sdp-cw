@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ActivityLog;
 use App\Models\ComplaintLog;
 use App\Models\Complaints;
 use App\Models\User;
@@ -36,6 +37,8 @@ class ComplaintsController extends Controller
 
         $complaint->save();
 
+        ActivityLog::add_log("Complaint assigned to - $request->user_id");
+
         return redirect("/dashboard");
     }
 
@@ -48,6 +51,8 @@ class ComplaintsController extends Controller
             'user_id' => Auth::user()->id,
         ]);
 
+        ActivityLog::add_log("Progress updated for complaint id - $id");
+
 
         return back();
     }
@@ -59,6 +64,8 @@ class ComplaintsController extends Controller
         $complaint->completed_at = now();
 
         $complaint->save();
+
+        ActivityLog::add_log("Complaint marked as completed - $id");
 
         return back();
     }
