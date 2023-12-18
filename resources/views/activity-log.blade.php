@@ -16,6 +16,9 @@
                     <th scope="col" class="px-6 py-3">
                         User
                     </th>
+                    <th scope="col" class="px-6 py-3 text-center">
+                        User Id
+                    </th>
                     <th scope="col" class="px-6 py-3">
                         Details
                     </th>
@@ -30,6 +33,10 @@
                     <td class="px-6 py-4">
                         {{$log->name}}
                     </td>
+                    <td class="px-6 py-4 text-center">
+                        {{$log->user_id}}
+                    </td>
+
                     <td class="px-6 py-4">
                         {{$log->activity}}
                     </td>

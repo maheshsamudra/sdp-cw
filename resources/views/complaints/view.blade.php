@@ -6,12 +6,16 @@
                 {{ $complaint->title }}
             </h2>
 
+            <x-secondary-link href="/dashboard" class="ms-auto me-3">
+                {{ __('Back') }}
+            </x-secondary-link>
+
             @if ($complaint->completed_at)
-            <x-primary-button disabled class="ms-auto opacity-50">
+            <x-primary-button disabled class="opacity-50">
                 {{ __('Resolved') }} on {{$complaint->completed_at}}
             </x-primary-button>
-            @else
-            <x-primary-link href="/complaints/{{ $complaint->id }}/complete" class="ms-auto">
+            @elseif (Auth::user()->id === $complaint->assigned_staff_user_id)
+            <x-primary-link href="/complaints/{{ $complaint->id }}/complete" class="">
                 {{ __('Mark as resolved') }}
             </x-primary-link>
             @endif
@@ -21,11 +25,38 @@
 
 
     <div class="max-w-[600px] mx-auto">
-        <ul>
-            <li>Title: {{ $complaint->title }}</li>
-            <li>Date: {{ $complaint['observed_date'] }}</li>
-            <li>Details: {{ $complaint['details'] }}</li>
-        </ul>
+
+        <div class="relative overflow-x-auto my-5">
+            <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+                <tbody>
+                    <tr class="bg-white border-b ">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            Title:
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $complaint->title }}
+                        </td>
+                    </tr>
+                    <tr class="bg-white border-b ">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            Date:
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $complaint['observed_date'] }}
+                        </td>
+                    </tr>
+                    <tr class="bg-white border-b ">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            Details:
+                        </th>
+                        <td class="px-6 py-4">
+                            {{ $complaint['details'] }}
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+        </div>
 
         @if (Auth::user()->role === 'manager' && !$complaint->assigned_staff_user_id)
         <form action="/complaints/{{$complaint->id}}/assign" method='post'>
@@ -49,13 +80,20 @@
         @endif
 
         @if (Auth::user()->role === 'staff' && !$complaint->completed_at)
-        <form action="/complaints/{{$complaint->id}}/log" method='post'>
+        <form action="/complaints/{{$complaint->id}}/log" method='post' enctype="multipart/form-data">
             @csrf
             <div class="mb-6 mt-10">
-                <x-input-label for="comment" :value="__('Details')" />
+                <x-input-label for="comment" :value="__('Progress Details')" />
                 <x-textarea id="comment" class="block mt-1 w-full" name="comment" :value="old('comment')" required autocomplete="comment" />
             </div>
-            <x-primary-button type="submit">
+
+            <!-- <label for="file-input" class="sr-only">Choose Images</label>
+            <input type="file" name="images" id="file-input" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-gray-50 file:border-0 file:bg-gray-100 file:me-4 file:py-3 file:px-4" multiple accept="image/png, image/jpeg">
+            <br>
+            <br> -->
+
+
+            <x-primary-button type=" submit">
                 Update Progress
             </x-primary-button>
         </form>
@@ -65,8 +103,12 @@
 
         @endif
 
-        <h2 class="mt-6 mb-3">Progress Log</h2>
+
         @if (count($logs) > 0)
+
+        <div class="mt-6"></div>
+        <hr>
+        <h2 class="mt-6 mb-3">Progress Log</h2>
         <ul>
             @foreach ($logs as $log)
             <li class="my-3"><small>{{$log->created_at}}</small>
@@ -74,7 +116,8 @@
             </li>
             @endforeach
         </ul>
-        @else
+        @elseif (!!$complaint->assigned_staff_user_id)
+        <h2 class="mt-6 mb-3">Progress Log</h2>
         <p>No logs so far</p>
         @endif
 

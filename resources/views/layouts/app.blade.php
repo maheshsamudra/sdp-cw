@@ -29,6 +29,15 @@
         </header>
         @endif
 
+        @if (session()->has('message'))
+
+        <div class="max-w-[600px] text-center mx-auto py-6 px-4 sm:px-6 lg:px-8">
+            <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 " role="alert">
+                {{ session('message') }}
+            </div>
+        </div>
+        @endif
+
         <!-- Page Content -->
         <main>
             <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">

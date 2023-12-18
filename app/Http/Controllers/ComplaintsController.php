@@ -8,6 +8,9 @@ use App\Models\Complaints;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
+use Image;
+
 
 class ComplaintsController extends Controller
 {
@@ -19,7 +22,7 @@ class ComplaintsController extends Controller
         $staff = User::select("users.*", 'departments.name as department_name')->where('role', '=', 'staff')->join('departments', 'users.department_id', '=', 'departments.id')
             ->get();
 
-        $logs = ComplaintLog::where('complaint_id', $id)->get();
+        $logs = ComplaintLog::where('complaint_id', $id)->orderBy('created_at', 'desc')->get();
 
 
         return view('complaints.view', [
@@ -39,11 +42,32 @@ class ComplaintsController extends Controller
 
         ActivityLog::add_log("Complaint assigned to - $request->user_id");
 
+        session()->flash('message', 'Complaint assigned.');
+
         return redirect("/dashboard");
     }
 
     public function log($id, Request $request)
     {
+
+        // $images = $request->file('images');
+
+        // if ($images) {
+        //     // upload
+        //     $image = $request->file('file');
+        //     $input['file'] = time() . '.' . $image->getClientOriginalExtension();
+
+        //     $destinationPath = public_path('/thumbnail');
+        //     $imgFile = Image::make($image->getRealPath());
+        //     $imgFile->resize(150, 150, function ($constraint) {
+        //         $constraint->aspectRatio();
+        //     })->save($destinationPath . '/' . $input['file']);
+        //     $destinationPath = public_path('/uploads');
+        //     $image->move($destinationPath, $input['file']);
+        // }
+
+
+        // return;
 
         $complaint = ComplaintLog::create([
             'complaint_id' => $id,

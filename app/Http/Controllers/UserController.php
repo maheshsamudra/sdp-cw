@@ -52,7 +52,12 @@ class UserController extends Controller
                 'password' => Hash::make($request->input("Welcome@1234")),
             ]);
 
+            session()->flash('message', 'User added successfully.');
+
+
             ActivityLog::add_log("Manager added - $request->name | $request->email");
+
+            return redirect('/users');
         }
 
         return view("users.add.manager");
@@ -76,9 +81,14 @@ class UserController extends Controller
                 'password' => Hash::make($request->input("Welcome@1234")),
             ]);
 
+            session()->flash('message', 'User added successfully.');
+
             ActivityLog::add_log("Staff Member added - $request->name | $request->email | $request->departmentId");
+
+            return redirect('/users');
         }
         $departments = Department::get();
+
         return view("users.add.staff", ['departments' => $departments]);
     }
 }

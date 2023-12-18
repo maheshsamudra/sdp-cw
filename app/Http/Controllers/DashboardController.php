@@ -20,16 +20,20 @@ class DashboardController extends Controller
 
         $user_id = $user->id;
 
+
         $complaints = Complaint::when($isManager, function ($query) {
             $query->whereNull('assigned_staff_user_id');
-        })->when($isStaff, function ($query, int $user_id) {
-            $query->where('assigned_staff_user_id', $user_id)->whereNull('completed_at');
-        })->get();
+        })->when($isStaff, function ($query) {
+            $query->where('assigned_staff_user_id', Auth::user()->id)->whereNull('completed_at');
+        })->orderBy('observed_date', 'desc')->get();
+
+        $completed_complaints = Complaint::where('assigned_staff_user_id', $user_id)->whereNotNull('completed_at')->get();
 
 
         return view("dashboard.{$user['role']}", [
             'data' => $data,
-            'complaints' => $complaints
+            'complaints' => $complaints,
+            'completed_complaints' => $completed_complaints
         ]);
     }
 }
