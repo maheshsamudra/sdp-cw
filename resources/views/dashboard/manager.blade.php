@@ -48,5 +48,37 @@
     @endif
 
 
+    <div class="grid grid-cols-2 mt-12 gap-4 max-w-[600px] mx-auto">
+
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow text-center">
+            <h5 class="mb-2 text-6xl font-thin tracking-tight text-gray-900">{{$stats->totalComplaints}}</h5>
+            <p class="font-bold text-gray-700 dark:text-gray-400">Total Complaints</p>
+        </div>
+
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow text-center">
+            <h5 class="mb-2 text-6xl font-thin tracking-tight text-gray-900">{{$stats->totalResolvedComplaints}}</h5>
+            <p class="font-bold text-gray-700 dark:text-gray-400">Total Resolved Complaints</p>
+        </div>
+
+
+    </div>
+
+    <div class="grid grid-cols-2 mt-12 gap-4 max-w-[600px] mx-auto">
+
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow text-center">
+            <h5 class="mb-2 text-6xl font-thin tracking-tight text-gray-900">{{$stats->totalComplaintsThisMonth}}</h5>
+            <p class="font-bold text-gray-700 dark:text-gray-400">Total Complaints in last 30 days</p>
+        </div>
+
+        <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow text-center">
+            <h5 class="mb-2 text-6xl font-thin tracking-tight text-gray-900">{{$stats->totalResolvedComplaintsThisMonth}}</h5>
+            <p class="font-bold text-gray-700 dark:text-gray-400">Total Resolved Complaints in last 30 days</p>
+        </div>
+
+
+
+    </div>
+
+
 
 </x-app-layout>

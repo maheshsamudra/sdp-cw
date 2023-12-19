@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Complaint;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Database\Query\Builder;
 
@@ -34,11 +35,22 @@ class DashboardController extends Controller
                 $query->where('user_id', Auth::user()->id);
             })->get();
 
+        $stats = new \stdClass();
+
+        if ($isManager) {
+            $stats->totalComplaints = Complaint::count();
+            $stats->totalResolvedComplaints = Complaint::whereNotNull('completed_at')->count();
+
+            $stats->totalComplaintsThisMonth = Complaint::where('created_at', '>=', Carbon::parse('Now -30 days'))->count();
+            $stats->totalResolvedComplaintsThisMonth = Complaint::where('completed_at', '>=', Carbon::parse('Now -30 days'))->whereNotNull('completed_at')->count();
+        }
+
 
         return view("dashboard.{$user['role']}", [
             'data' => $data,
             'complaints' => $complaints,
-            'completed_complaints' => $completed_complaints
+            'completed_complaints' => $completed_complaints,
+            'stats' => $stats
         ]);
     }
 }
