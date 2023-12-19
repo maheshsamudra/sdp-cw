@@ -17,10 +17,7 @@ class DashboardController extends Controller
 
         $isManager = $user->role == 'manager';
         $isStaff = $user->role == 'staff';
-        $isUser = $user->role = "user";
-
-        $user_id = $user->id;
-
+        $isUser = $user->role == "user";
 
         $complaints = Complaint::when($isManager, function ($query) {
             $query->whereNull('assigned_staff_user_id');

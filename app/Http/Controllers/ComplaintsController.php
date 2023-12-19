@@ -85,6 +85,15 @@ class ComplaintsController extends Controller
         ]);
     }
 
+    public function view_all()
+    {
+        $complaints = Complaints::orderBy('observed_date', 'desc')->get();
+
+        return view('complaints.all', [
+            'complaints' => $complaints,
+        ]);
+    }
+
     public function assign($id, Request $request)
     {
 

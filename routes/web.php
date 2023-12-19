@@ -43,6 +43,8 @@ Route::post('/complaints/{id}/assign', [ComplaintsController::class, 'assign'])-
 Route::post('/complaints/{id}/log', [ComplaintsController::class, 'log'])->middleware(['auth', 'verified', 'role:staff']);
 Route::get('/complaints/{id}/complete', [ComplaintsController::class, 'complete'])->middleware(['auth', 'verified', 'role:staff']);
 
+Route::get('/complaints', [ComplaintsController::class, 'view_all'])->middleware(['auth', 'verified', 'role:manager'])->name('all_complaints');
+
 
 
 Route::get('/view-image', [ImageController::class, 'view'])->middleware(['auth', 'verified'])->name('view_image');
