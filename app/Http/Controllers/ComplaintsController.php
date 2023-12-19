@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Image;
+use File;
 
 
 class ComplaintsController extends Controller
@@ -26,12 +27,30 @@ class ComplaintsController extends Controller
 
 
             // add the new user
-            Complaints::create([
+            $complaint = Complaints::create([
                 'title' => $request->title,
                 'details' => $request->details,
                 'observed_date' => $request->date,
                 'user_id' => Auth::user()->id
             ]);
+
+            $images = $request->file('images');
+
+
+            if ($complaint->id &&  $images) {
+                // store the images
+
+
+                foreach ($images as $key => $image) {
+                    # code...
+                    $ext = $image->getClientOriginalExtension();
+                    Storage::disk('local')->put("complaints/$complaint->id/$key.$ext", file_get_contents($image));
+                }
+            }
+
+            return;
+
+
 
             session()->flash('message', 'Complaint logged.');
 
@@ -55,11 +74,14 @@ class ComplaintsController extends Controller
 
         $logs = ComplaintLog::where('complaint_id', $id)->orderBy('created_at', 'desc')->get();
 
+        $images = Storage::files("complaints/$id");
+
 
         return view('complaints.view', [
             'complaint' => $complaint,
             'staff' => $staff,
-            'logs' => $logs
+            'logs' => $logs,
+            'images' => $images
         ]);
     }
 

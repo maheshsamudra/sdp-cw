@@ -45,7 +45,7 @@ Route::get('/complaints/{id}/complete', [ComplaintsController::class, 'complete'
 
 
 
-Route::get('/image/{category}/{folder}/{filename}.jpg', [ImageController::class, 'view'])->middleware(['auth', 'verified'])->name('view_image');
+Route::get('/view-image', [ImageController::class, 'view'])->middleware(['auth', 'verified'])->name('view_image');
 Route::get('/activity-log', function () {
 
     $logs = ActivityLog::select('activity_logs.*', 'users.id', 'users.name', 'users.email')

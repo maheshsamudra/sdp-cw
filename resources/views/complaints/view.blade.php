@@ -22,8 +22,6 @@
         </div>
     </x-slot>
 
-
-
     <div class="max-w-[600px] mx-auto">
 
         <div class="relative overflow-x-auto my-5">
@@ -46,7 +44,7 @@
                         </td>
                     </tr>
                     <tr class="bg-white border-b ">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap align-top">
                             Details:
                         </th>
                         <td class="px-6 py-4">
@@ -65,6 +63,31 @@
                             @endif
                         </td>
                     </tr>
+
+                    @if (count($images) > 0)
+                    <tr class="bg-white border-b ">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap align-top">
+                            Images:
+                        </th>
+                        <td class="px-6 py-4">
+
+                            <div class="grid grid-cols-4 gap-4">
+                                @foreach ($images as $image)
+                                <div class="">
+                                    <div class="col-sm-6 col-md-4 col-lg-3 item">
+                                        <a href="/view-image?url={{$image}}" data-lightbox="photos">
+                                            <img class="img-fluid" src="/view-image?url={{$image}}">
+                                        </a>
+                                    </div>
+                                    <!-- <div class="thumbnail">
+                                        <img src="/view-image?url={{$image}}" alt="">
+                                    </div> -->
+                                </div>
+                                @endforeach
+                            </div>
+                        </td>
+                    </tr>
+                    @endif
 
                 </tbody>
             </table>

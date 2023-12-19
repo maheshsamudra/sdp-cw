@@ -18,7 +18,7 @@
     <div class="max-w-[600px] mx-auto">
 
 
-        <form method="POST" action="/complaint">
+        <form method="POST" action="/complaint" enctype="multipart/form-data">
             @csrf
 
             <!-- Name -->
@@ -39,6 +39,11 @@
                 <x-input-label for="details" :value="__('Details')" />
                 <x-textarea id="details" class="block mt-1 w-full" name="details" :value="old('details')" required autocomplete="details" />
                 <x-input-error :messages="$errors->get('details')" class="mt-2" />
+            </div>
+
+            <div class="mt-4">
+                <label for="file-input" class="sr-only">Select Images</label>
+                <input type="file" name="images[]" id="file-input" class="block w-full border border-gray-200 shadow-sm rounded-lg text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none file:bg-gray-50 file:border-0 file:bg-gray-100 file:me-4 file:py-3 file:px-4" multiple accept="image/png, image/jpeg">
             </div>
 
 
