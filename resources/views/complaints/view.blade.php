@@ -53,6 +53,18 @@
                             {{ $complaint['details'] }}
                         </td>
                     </tr>
+                    <tr class="bg-white border-b ">
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            Status:
+                        </th>
+                        <td class="px-6 py-4">
+                            @if (!$complaint->completed_at)
+                            In Progress
+                            @else
+                            Completed
+                            @endif
+                        </td>
+                    </tr>
 
                 </tbody>
             </table>

@@ -29,8 +29,8 @@ Route::get('/dashboard', [DashboardController::class, 'view'])->middleware(['aut
 
 Route::get('/users', [UserController::class, 'view'])->middleware(['auth', 'verified'])->name('users');
 Route::get('/users/{id}', [UserController::class, 'view_user'])->middleware(['auth', 'verified'])->name('view_user');
-Route::get('/users/{id}/suspend', [UserController::class, 'suspend'])->middleware(['auth', 'verified']);
-Route::get('/users/{id}/reactivate', [UserController::class, 'reactivate'])->middleware(['auth', 'verified']);
+Route::get('/users/{id}/suspend', [UserController::class, 'suspend'])->middleware(['auth', 'verified', 'role:manager']);
+Route::get('/users/{id}/reactivate', [UserController::class, 'reactivate'])->middleware(['auth', 'verified', 'role:manager']);
 
 Route::match(['get', 'post'], '/users/staff/add', [UserController::class, 'add_staff'])->middleware(['auth', 'verified'])->name('add_staff');
 Route::match(['get', 'post'], '/users/manager/add', [UserController::class, 'add_manager'])->middleware(['auth', 'verified'])->name('add_manager');
@@ -38,10 +38,10 @@ Route::match(['get', 'post'], '/users/manager/add', [UserController::class, 'add
 
 // Complaints Page Route
 Route::get('/complaints/{id}', [ComplaintsController::class, 'view'])->middleware(['auth', 'verified']);
-Route::get('/complaint', [ComplaintsController::class, 'add'])->middleware(['auth', 'verified']);
-Route::post('/complaints/{id}/assign', [ComplaintsController::class, 'assign'])->middleware(['auth', 'verified']);
-Route::post('/complaints/{id}/log', [ComplaintsController::class, 'log'])->middleware(['auth', 'verified']);
-Route::get('/complaints/{id}/complete', [ComplaintsController::class, 'complete'])->middleware(['auth', 'verified']);
+Route::match(['get', 'post'], '/complaint', [ComplaintsController::class, 'add'])->middleware(['auth', 'verified', 'role:user']);
+Route::post('/complaints/{id}/assign', [ComplaintsController::class, 'assign'])->middleware(['auth', 'verified', 'role:manager']);
+Route::post('/complaints/{id}/log', [ComplaintsController::class, 'log'])->middleware(['auth', 'verified', 'role:staff']);
+Route::get('/complaints/{id}/complete', [ComplaintsController::class, 'complete'])->middleware(['auth', 'verified', 'role:staff']);
 
 
 
@@ -53,7 +53,7 @@ Route::get('/activity-log', function () {
 
 
     return view("activity-log", ['logs' => $logs]);
-})->middleware(['auth', 'verified'])->name('view_activity_logs');
+})->middleware(['auth', 'verified', 'role:manager'])->name('view_activity_logs');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

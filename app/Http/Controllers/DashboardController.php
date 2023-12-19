@@ -27,12 +27,13 @@ class DashboardController extends Controller
         })->when($isStaff, function ($query) {
             $query->where('assigned_staff_user_id', Auth::user()->id)->whereNull('completed_at');
         })->when($isUser, function ($query) {
-            $query->where('user_id', Auth::user()->id);
+            $query->where('user_id', Auth::user()->id)->whereNull('completed_at');
         })->orderBy('observed_date', 'desc')->get();
 
-        $completed_complaints = Complaint::where('assigned_staff_user_id', $user_id)
-            ->whereNotNull('completed_at')
-            ->when($isUser, function ($query) {
+        $completed_complaints = Complaint::whereNotNull('completed_at')
+            ->when($isStaff, function ($query) {
+                $query->where('assigned_staff_user_id', Auth::user()->id);
+            })->when($isUser, function ($query) {
                 $query->where('user_id', Auth::user()->id);
             })->get();
 

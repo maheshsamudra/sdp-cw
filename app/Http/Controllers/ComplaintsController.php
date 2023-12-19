@@ -14,8 +14,33 @@ use Image;
 
 class ComplaintsController extends Controller
 {
-    public function add()
+    public function add(Request $request)
     {
+
+        if ($request->isMethod('post')) {
+            $validated = $request->validate([
+                'title' => 'required|max:255',
+                'details' => 'required',
+                'date' => 'required',
+            ]);
+
+
+            // add the new user
+            Complaints::create([
+                'title' => $request->title,
+                'details' => $request->details,
+                'observed_date' => $request->date,
+                'user_id' => Auth::user()->id
+            ]);
+
+            session()->flash('message', 'Complaint logged.');
+
+
+            ActivityLog::add_log("Complaint added - $request->name | $request->email");
+
+
+            return redirect('/dashboard');
+        }
 
         return view('complaints.add');
     }
