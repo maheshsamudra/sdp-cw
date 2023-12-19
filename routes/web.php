@@ -29,6 +29,8 @@ Route::get('/dashboard', [DashboardController::class, 'view'])->middleware(['aut
 
 Route::get('/users', [UserController::class, 'view'])->middleware(['auth', 'verified'])->name('users');
 Route::get('/users/{id}', [UserController::class, 'view_user'])->middleware(['auth', 'verified'])->name('view_user');
+Route::get('/users/{id}/suspend', [UserController::class, 'suspend'])->middleware(['auth', 'verified']);
+Route::get('/users/{id}/reactivate', [UserController::class, 'reactivate'])->middleware(['auth', 'verified']);
 
 Route::match(['get', 'post'], '/users/staff/add', [UserController::class, 'add_staff'])->middleware(['auth', 'verified'])->name('add_staff');
 Route::match(['get', 'post'], '/users/manager/add', [UserController::class, 'add_manager'])->middleware(['auth', 'verified'])->name('add_manager');

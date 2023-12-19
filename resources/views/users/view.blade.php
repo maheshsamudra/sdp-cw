@@ -37,6 +37,9 @@
                 <tr class="bg-white border-b ">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         {{$user->name}}
+                        @if ($user->deleted_at)
+                        (Suspended)
+                        @endif
                     </th>
                     <td class="px-6 py-4">
                         {{$user->email}}

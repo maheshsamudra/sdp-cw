@@ -16,7 +16,7 @@ class UserController extends Controller
     public function view()
     {
 
-        $staff = User::where('role', '=', 'staff')->get();
+        $staff = User::where('role', '=', 'staff')->orderBy('deleted_at', 'asc')->orderBy('name', 'asc')->get();
         $managers = User::where('role', '=', 'manager')->get();
 
         return view("users.view", [
@@ -30,10 +30,43 @@ class UserController extends Controller
 
         $user = User::find($id);
 
+        $department = Department::find($user->department_id);
+
         return view("users.view-user", [
             'user' => $user,
+            'department' => $department
         ]);
     }
+
+    public function suspend($id)
+    {
+
+        $user = User::find($id);
+
+        $user->deleted_at = now();
+
+        $user->save();
+
+        session()->flash('message', 'User suspended.');
+
+        return redirect('/users');
+    }
+
+    public function reactivate($id)
+    {
+
+        $user = User::find($id);
+
+        $user->deleted_at = null;
+
+        $user->save();
+
+        session()->flash('message', 'User reactivated.');
+
+        return redirect('/users');
+    }
+
+
 
     public function add_manager(Request $request)
     {
