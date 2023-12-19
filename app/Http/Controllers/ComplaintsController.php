@@ -14,6 +14,12 @@ use Image;
 
 class ComplaintsController extends Controller
 {
+    public function add()
+    {
+
+        return view('complaints.add');
+    }
+
     public function view($id)
     {
 

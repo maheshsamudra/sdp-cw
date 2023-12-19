@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80825dabfa90579a0f65704d0fb58c43",
+    "content-hash": "bc7e9532ea031870d99df5cf5d56514a",
     "packages": [
         {
             "name": "brick/math",
@@ -3225,6 +3225,59 @@
                 }
             ],
             "time": "2023-11-08T05:53:05+00:00"
+        },
+        {
+            "name": "slwdc/nic-parser",
+            "version": "v1.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slwdc/NICParser.git",
+                "reference": "eb697d4ab5c7e8c95fef17b4f188691fcb703993"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slwdc/NICParser/zipball/eb697d4ab5c7e8c95fef17b4f188691fcb703993",
+                "reference": "eb697d4ab5c7e8c95fef17b4f188691fcb703993",
+                "shasum": ""
+            },
+            "require": {
+                "php-64bit": "^7.4 || ^8.0"
+            },
+            "require-dev": {
+                "ayesh/case-insensitive-array": "^1.2.0",
+                "phpunit/phpunit": "^9.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "SLWDC\\NICParser\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ayesh Karunaratne",
+                    "email": "ayesh@ayesh.me"
+                }
+            ],
+            "description": "Sri Lankan national identity card number validator",
+            "keywords": [
+                "identity-card",
+                "national-identification-number",
+                "national-identity-documents",
+                "slwdc",
+                "sri-lanka",
+                "srilanka",
+                "validation"
+            ],
+            "support": {
+                "issues": "https://github.com/slwdc/NICParser/issues",
+                "source": "https://github.com/slwdc/NICParser"
+            },
+            "time": "2020-07-05T17:08:07+00:00"
         },
         {
             "name": "symfony/console",

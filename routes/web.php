@@ -38,6 +38,7 @@ Route::match(['get', 'post'], '/users/manager/add', [UserController::class, 'add
 
 // Complaints Page Route
 Route::get('/complaints/{id}', [ComplaintsController::class, 'view'])->middleware(['auth', 'verified']);
+Route::get('/complaint', [ComplaintsController::class, 'add'])->middleware(['auth', 'verified']);
 Route::post('/complaints/{id}/assign', [ComplaintsController::class, 'assign'])->middleware(['auth', 'verified']);
 Route::post('/complaints/{id}/log', [ComplaintsController::class, 'log'])->middleware(['auth', 'verified']);
 Route::get('/complaints/{id}/complete', [ComplaintsController::class, 'complete'])->middleware(['auth', 'verified']);

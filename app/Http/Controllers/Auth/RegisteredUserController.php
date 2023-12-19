@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use SLWDC\NICParser\Parser;
+
 
 class RegisteredUserController extends Controller
 {
@@ -28,13 +30,33 @@ class RegisteredUserController extends Controller
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): RedirectResponse
+    public function store(Request $request)
     {
+
+
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'dob' => ['required', 'string', 'max:255'],
+            'nic' => ['required', 'string', 'max:12', function ($attribute, $value, $fail) {
+
+                $parser = null;
+
+                try {
+                    $parser = new Parser(request()->nic);
+                } catch (\Throwable $th) {
+                    $parser = null;
+                }
+
+
+                if (!$parser || $parser->getBirthday()->format('Y-m-d') != request()->dob) {
+                    $fail('NIC validation failed');
+                }
+            }],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
+
+
 
         $user = User::create([
             'name' => $request->name,
