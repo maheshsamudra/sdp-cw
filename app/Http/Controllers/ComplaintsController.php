@@ -48,14 +48,13 @@ class ComplaintsController extends Controller
                 }
             }
 
-            return;
-
-
 
             session()->flash('message', 'Complaint logged.');
 
+            $user = Auth::user();
 
-            ActivityLog::add_log("Complaint added - $request->name | $request->email");
+
+            ActivityLog::add_log("Complaint added by - $user->name | $user->email, complaint ID: $complaint->id");
 
 
             return redirect('/dashboard');

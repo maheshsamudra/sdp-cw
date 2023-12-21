@@ -74,6 +74,7 @@
             </thead>
             <tbody>
                 @foreach ($managers as $user)
+                @if (Auth::user()->id != $user->id)
                 <tr class="bg-white border-b ">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                         {{$user->name}}
@@ -84,7 +85,9 @@
                     <td class="px-6 py-4">
                         <a href="/users/{{$user->id}}">Edit</a>
                     </td>
-                </tr> @endforeach
+                </tr>
+                @endif
+                @endforeach
 
             </tbody>
         </table>

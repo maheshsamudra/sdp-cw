@@ -13,9 +13,12 @@ return new class extends Migration
     {
         Schema::create('complaints', function (Blueprint $table) {
             $table->id();
-            $table->integer('department_id')->nullable()->constrained();
-            $table->integer('user_id')->nullable()->constrained();
-            $table->integer('assigned_staff_user_id')->nullable()->constrained();
+            $table->foreignId('department_id')->nullable()->constrained();
+            $table->foreignId('user_id')->nullable()->constrained();
+            $table->foreignId('assigned_staff_user_id')->nullable()->constrained(
+                table: 'users',
+                indexName: 'id'
+            );
             $table->string('title');
             $table->date('observed_date');
             $table->text('details');

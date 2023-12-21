@@ -70,7 +70,7 @@
                         {{$complaint->title}}
                     </th>
                     <td class="px-6 py-4">
-                        {{$complaint->completed_at}}
+                        {{$complaint->created_at}}
                     </td>
                     <td class="px-6 py-4">
                         <a href="/complaints/{{$complaint->id}}">View</a>

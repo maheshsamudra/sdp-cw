@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('complaint_images', function (Blueprint $table) {
             $table->id();
-            $table->integer('complaint_id')->nullable()->constrained();
+            $table->foreignId('complaint_id')->nullable()->constrained();
             $table->string('url');
             $table->timestamps();
         });

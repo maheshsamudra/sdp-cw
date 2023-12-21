@@ -17,7 +17,7 @@ class EnsureUserValidation
     public function handle(Request $request, Closure $next, string $role = null): Response
     {
         if (Auth::user()->role != $role) {
-            return back();
+            return redirect("/dashboard");
         }
         return $next($request);
     }

@@ -27,8 +27,8 @@ Route::get('/complaints/view/{id}', [ComplaintsController::class, 'view']);
 
 Route::get('/dashboard', [DashboardController::class, 'view'])->middleware(['auth', 'verified'])->name('dashboard');
 
-Route::get('/users', [UserController::class, 'view'])->middleware(['auth', 'verified'])->name('users');
-Route::get('/users/{id}', [UserController::class, 'view_user'])->middleware(['auth', 'verified'])->name('view_user');
+Route::get('/users', [UserController::class, 'view'])->middleware(['auth', 'verified', 'role:manager'])->name('users');
+Route::get('/users/{id}', [UserController::class, 'view_user'])->middleware(['auth', 'verified', 'role:manager'])->name('view_user');
 Route::get('/users/{id}/suspend', [UserController::class, 'suspend'])->middleware(['auth', 'verified', 'role:manager']);
 Route::get('/users/{id}/reactivate', [UserController::class, 'reactivate'])->middleware(['auth', 'verified', 'role:manager']);
 

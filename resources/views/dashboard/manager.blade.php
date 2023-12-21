@@ -48,6 +48,9 @@
     @endif
 
 
+    <h1 class="text-3xl mt-10 text-center">Dashboard Stats</h1>
+
+
     <div class="grid grid-cols-2 mt-12 gap-4 max-w-[600px] mx-auto">
 
         <div class="block max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow text-center">

@@ -146,7 +146,7 @@
         <h2 class="mt-6 mb-3">Progress Log</h2>
         <ul>
             @foreach ($logs as $log)
-            <li class="my-3"><small>{{$log->created_at}}</small>
+            <li class="my-3"><small>{{date_format($log->created_at, "Y-m-d")}}</small>
                 <p>{{$log->comment}}</p>
             </li>
             @endforeach
